@@ -1,0 +1,106 @@
+---
+pipeline:
+    name: _template
+    description: "a working demo that serves as a template for new pipelines"
+    # version: v0.0.1
+# suiteVersions:
+#     suiteName: v0.0.0
+actions: 
+    _global:   
+        environment: mdi-demo
+        condaFamilies:
+            - base
+            - r-4.1         
+        optionFamilies:
+            - demo
+    do:
+        order: 1
+        thread: do
+        # environment: demo-do
+        # condaFamilies:
+        #     - base
+        #     - r-4.1      
+        # optionFamilies:
+        #     - demo
+        resources:
+            required:
+                total-ram: 2G
+            recommended: 
+                n-cpu: 1
+                ram-per-cpu: 2G
+        job-manager:
+            recommended:
+                time-limit: 1:00:00
+        description: "list files in a directory, make a plot, print a table, and sleep for 15 seconds"      
+    snakemake:
+        order: 2
+        thread: snakemake
+        # environment: demo-snakemake
+        # condaFamilies:
+        #     - base
+        #     - r-4.1        
+        optionFamilies:
+            - snakemake
+        resources:
+            required:
+                total-ram: 4G
+            recommended: 
+                n-cpu: 2
+                ram-per-cpu: 2G
+        job-manager:
+            recommended:
+                time-limit: 1:00:00
+        description: "does the same thing as 'do', but uses snakemake in Workflow.sh"
+#condaFamilies:
+optionFamilies:     
+    demo:
+        options:
+            input-dir: 
+                order: 1
+                short: i
+                type: string
+                required: true
+                default: null
+                directory:
+                    must-exist: true
+                    bind-mount: true # options with 'directory' key are bind-mounted to containers by default
+                description: "the directory whose contents will be listed in the output"   
+            option-1:
+                order: 2
+                short: a
+                type: integer
+                required: false
+                default: 99
+                description: "this is an optional integer configuration option"
+            option-2: 
+                order: 3
+                short: b
+                type: boolean
+                required: false
+                default: false
+                description: "this is an optional boolean (i.e, logical flag) option"
+package:
+    do: # the pipeline action after which a data package should assembled
+        uploadType: _template # a signal to the Stage 2 framework regarding the package contents
+        files:
+            directoryContents:
+                type: file-list
+                file: $DATA_FILE_PREFIX.directoryContents.txt
+            dataFrame:
+                type: sample-value-matrix
+                header: true
+                separator: comma
+                file: $DATA_FILE_PREFIX.mtcars.csv
+            # manifestFile: # a sample manifest
+            #     type: comma-delimited
+            #     manifestType: simple
+            #     file: $XXXX.xxxx        
+    # snakemake: 
+    #     uploadType: _template
+    #     extends: do # the new package will add files to the package from a previous step
+    #     files:
+container:
+    supported: false
+    registry:  ghcr.io  # domain name of your OCI-compatible, oras-accessible, container registry [ghcr.io]
+    owner:     xxxxxxxx # the name of the owner, e.g., user or organization, at 'registry'
+    installer: apt-get  # the installer program used by the container OS, typically apt-get or yum [apt-get]
