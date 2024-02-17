@@ -36,5 +36,6 @@ Shared action modules for use by other pipelines include:
 Please see the [ont-mdi-tools documentation site](https://wilsontelab.github.io/ont-mdi-tools)
 for detailed information on suite installation and the usage of specific pipeline and apps.
 
-Otherwise, code from several shared modules is written as standalone
-scripts that are availalbe for use under the MIT license. 
+Otherwise, code from several shared modules is written as 
+[standalone scripts](https://wilsontelab.github.io/ont-mdi-tools/docs/20_standalone_scripts/00_standalones.html)
+available for use under the MIT license. 
