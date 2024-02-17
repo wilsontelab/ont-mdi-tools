@@ -1,0 +1,29 @@
+---
+version: v0.0.0 # optional, for internal tracking
+action: # required
+    condaFamilies: 
+        - base
+        - nanopore
+    optionFamilies:
+        - pod5-dir
+        - dorado
+        - genomex-mdi-tools//genome # only needed when align-reads is set
+    resources:
+        required:
+            total-ram: 64G
+        recommended: 
+            n-cpu: 8
+            n-gpu: 2
+            ram-per-cpu: 8G
+    job-manager:
+        recommended:
+            partition: gpu
+            time-limit: 48:00:00
+    description: "use Dorado to perform basecalling (and alignment) from ONT POD5 read file(s)"
+optionFamilies:
+    genome:
+        options:
+            genomes-dir:
+                required: false
+                directory:
+                    must-exist: false

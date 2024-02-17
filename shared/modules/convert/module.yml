@@ -1,0 +1,18 @@
+---
+version: v0.0.0 # optional, for internal tracking
+action: # required
+    condaFamilies: 
+        - base
+        - nanopore
+    optionFamilies:
+        - fast5-dir
+    resources:
+        required:
+            total-ram: 32G
+        recommended: 
+            n-cpu: 16
+            ram-per-cpu: 2G
+    job-manager:
+        recommended:
+            time-limit: 12:00:00            
+    description: "convert ONT FAST5 read file(s) one-to-one to POD5 file(s) for use by Dorado"

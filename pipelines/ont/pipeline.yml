@@ -1,0 +1,25 @@
+---
+pipeline:
+    name: ont
+    description: "Simple pipeline wrapper around ONT download, convert, repack, and basecall actions"
+    version: v0.1.0
+# suiteVersions:
+#     suiteName: v0.0.0 # use this version of a suite invoked as 'suite//module', etc. [latest]
+actions: 
+    download:
+        order: 1
+        module: download
+    convert:
+        order: 2
+        module: convert
+    repack:
+        order: 3
+        module: repack
+    basecall:
+        order: 4
+        module: basecall
+# container:
+#     supported: false    
+#     registry:  ghcr.io  # domain name of your OCI-compatible, oras-accessible, container registry [ghcr.io]
+#     owner:     xxxxxxxx # REQUIRED: the name of the owner, e.g., user or organization, at 'registry'
+#     installer: apt-get  # the installer program used by the container OS, typically apt-get or yum [apt-get]

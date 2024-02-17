@@ -1,0 +1,33 @@
+---
+#--------------------------------------------------------------------
+# options that describe the oligo configuration for modification model training
+#--------------------------------------------------------------------
+options:
+    flank-left: 
+        order: 1
+        short: null
+        type: string
+        required: false
+        default: CGAACTACTCAGCCAATCAC
+        description: "fixed sequence flanking the randomized interrogation chunk on the left"
+    chunk: 
+        order: 2
+        short: null
+        type: string
+        required: false
+        default: NNVVTVVNN
+        description: "configuration of randomized interrogation chunk, with focus base in the middle"
+    flank-right: 
+        order: 3
+        short: null
+        type: string
+        required: false
+        default: GCCTACCACATCATC
+        description: "fixed sequence flanking the randomized interrogation chunk on the right"
+    modification-indices: 
+        order: 4
+        short: null
+        type: string
+        required: false
+        default: canonical:AGAGC,modified:CTGCA
+        description: "sequence indices following --flank-right of form <baseName>:<index>[,<baseName>:<index>...]"

@@ -1,55 +1,35 @@
 ---
-title: "Tool Suite Template"
+title: "ont-mdi-tools"
 has_children: false
 nav_order: 0
 ---
-<!--- edit the title above with the short name of your repository, 
-      e.g, "My Tools", which will appear on the menu tab item -->
 
-<!-- please do not alter the next line -->
-{% include mdi-project-overview.md %}
+{% include mdi-project-overview.md %} 
 
+This **ont-mdi-tools** repository contains pipelines and apps
+from the 
+[Thomas Wilson laboratory](https://wilsonte-umich.github.io)
+at the University of Michigan
+for general processing of Oxford Nanopore read data, 
+including activities like basecalling, POD5 file manipulation, 
+modification modeling, etc.
 
-<!-- replace this section with markdown content describing your tool suite -->
-<!-- https://www.markdownguide.org/basic-syntax/ -->
+In general, these tools implement publicly
+distributed ONT software and act upstream of genome-specific
+actions like alignment and variant calling.
 
-These pages provide a detailed description of the **MDI tool suite template**, 
-which you can use to create your own suite of Stage 1 Pipelines and Stage 2 Apps. 
+### Available tools
 
-- <https://github.com/MiDataInt/mdi-suite-template>
+Pipelines and apps in stable release, based on established modules:
+- **ont** = a simple pipeline wrapper around download, convert, repack, and basecall actions
 
-### Quick start
+Pipelines and apps in alpha, with exploratory code that is not considered stable:
+- **modmod** = train a base modification model (modmod) using concatemerized oligos
 
-[**Click here**](https://github.com/MiDataInt/mdi-suite-template/generate) 
-to create a new tool suite repository from the template.
+Shared action modules for use by other pipelines include:
+- **download** = downlad ONT software and basecalling models
+- **convert** = convert FAST5 files to POD5 format
+- **repack** = sort a set of POD5 files from a single ONT run to one POD5 file per channel group prior to duplex analysis
+- **basecall** = perform efficient basecalling (and optionally alignment) on POD5 reads on a shared compute cluster
 
->We recommend **NAME-mdi-tools** as the name of your 
-repository, replacing 'NAME' with an informative name of your choosing, 
-e.g., 'johndoelab'.
-
-Open and edit the following files, using the instructions in comments
-to find lines to edit to match your needs:
-
-- _config.yml
-- overview.md
-- LICENSE (adjust the type, year, and licensee)
-- README.md (delete the developer instructions, if desired)
-
-Then copy and modify the '_template' pipeline or app, which provides a working 
-boilerplate for all required code. 
-
-### Further documentation
-
-The rest of these pages walk you through
-the basic structure of pipeline and app assemblies and 
-provide a working reference as you write code.
-
-In addition, you will want to explore the documentation for the
-pipelines and apps frameworks that provide support functions
-for writing tools:
-
-- [Stage 1 pipelines framework](/mdi-pipelines-framework)
-- [Stage 2 apps framework](/mdi-apps-framework)
-
-<!-- please do not alter the next line -->
 {% include mdi-project-documentation.md %}

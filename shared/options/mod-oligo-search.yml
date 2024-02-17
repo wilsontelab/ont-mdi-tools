@@ -1,0 +1,40 @@
+---
+#--------------------------------------------------------------------
+# options that constrain the search for modification model training chunks in reads
+#--------------------------------------------------------------------
+options:
+    max-penalty: 
+        order: 1
+        short: null
+        type: integer
+        required: false
+        default: 4
+        description: "maximium allowed Smith-Waterman alignment penalty when finding flanks"
+    length-padding: 
+        order: 2
+        short: null
+        type: integer
+        required: false
+        default: 5
+        description: "pad candidate oligos with this many bp during finding to account for indels"
+    max-read-length: 
+        order: 3
+        short: null
+        type: integer
+        required: false
+        default: 10000
+        description: "don't process reads longer than --max-read-length for CPU and memory efficiency"
+    max-chunks-per-thread: 
+        order: 4
+        short: null
+        type: integer
+        required: false
+        default: 1000000
+        description: "stop processing reads on a thread when --max-chunks-per-thread chunks have been found"
+    min-score-delta: 
+        order: 5
+        short: null
+        type: integer
+        required: false
+        default: 3
+        description: "discard chunks when the score difference between indices is < --min-score-delta"
