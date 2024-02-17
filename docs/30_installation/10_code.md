@@ -57,21 +57,8 @@ or change into the directory prior to calling _./mdi_.
 ./mdi add -s wilsontelab/ont-mdi-tools 
 ```
 
-Alternatively, you can perform the required suite addition steps one at a time:
-
-```sh
-nano config/suites.yml # or use any other text editor to edit suites.yml
-```
-
-```yml
-# mdi/config/suites.yml
-suites:
-    - wilsontelab/ont-mdi-tools # add this tools suite to the config file
-```
-
-```sh
-./install.sh # re-install to add the new tool suite
-```
+Alternatively, you can manually edit 'config/suites.yml' to include 
+wilsontelab/ont-mdi-tools and re-run `./install.sh` to install it.
 
 ### Execute a Stage 1 pipeline from the command line
 

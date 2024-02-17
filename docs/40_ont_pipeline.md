@@ -1,5 +1,5 @@
 ---
-title: ont pipeline
+title: "Wrapper pipeline: ont"
 has_children: false
 nav_order: 40
 published: true
@@ -13,10 +13,10 @@ ont-mdi-tools repository, namely:
 
 - `download` ONT software and models
 - `convert` FAST5 to POD5 files
-- `repack` time-series POD5 from MinKnow by channel group for duplex analysis
+- `repack` time-series POD5 files from MinKnow by channel group for duplex analysis
 - `basecall` POD5 signal data in simplex or duplex mode
 
-For clarity, most of these actions are wrappers that
+Most actions are wrappers that
 help you run ONT software such as `pod5` and `dorado`
 correctly and efficiently. They are not separate implementations
 of these program functions. 
@@ -27,6 +27,10 @@ same steps will start most ONT pipelines.
 
 ### Usage
 
+See our [general installation and usage help](https://wilsontelab.github.io/ont-mdi-tools/docs/30_installation/00_installation.html) and:
+
 ```sh
+mdi --help
 mdi ont --help
+mdi ont basecall --help # etc.
 ```

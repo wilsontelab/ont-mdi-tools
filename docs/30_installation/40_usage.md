@@ -59,7 +59,7 @@ mdi <pipeline> template > mydata.yml # e.g., mdi ont template
 nano mydata.yml
 ```
 
-Finally, the following commands will give show help for a pipeline
+Finally, the following commands will show help for a pipeline
 or one of its actions to understand how options are organized and what they do:
 
 ```sh
@@ -69,9 +69,10 @@ mdi <pipeline> <action> --help # e.g., mdi ont basecall --help
 
 ### Using ont-mdi-tools code outside of our pipelines
 
-You are free to use whatever code you'd like from this repository
+You may use whatever code you'd like from this repository
 in your own pipelines subject to the MIT license. 
 
-In particular, shared modules `repack` and `basecall`
-offer standalone scripts for performing IO-intensive actions
+In particular, shared modules `repack` and `basecall` offer 
+[standalone scripts](https://wilsontelab.github.io/ont-mdi-tools/docs/20_standalone_scripts/00_standalones.html)
+for performing IO-intensive actions
 on POD5 files on shared HPC resource servers. 

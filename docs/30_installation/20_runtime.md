@@ -25,3 +25,10 @@ mdi ont conda --list
 
 mdi modmod conda --create  # etc.
 ```
+
+### Dorado
+
+The commands above will install `pod5` and `remora`, but
+`dorado` is not yet available via conda. However, ont-mdi-tools
+provides the shared action module `download` you can use 
+to quickly download Dorado and its associated basecalling modules.
