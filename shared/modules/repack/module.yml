@@ -1,0 +1,19 @@
+---
+version: v0.0.0 # optional, for internal tracking
+action: # required
+    condaFamilies: 
+        - base
+        - nanopore
+    optionFamilies:
+        - pod5-dir
+        - pod5-repack
+    resources:
+        required:
+            total-ram: 96G
+        recommended: 
+            n-cpu: 8
+            ram-per-cpu: 12G
+    job-manager:
+        recommended:
+            time-limit: 12:00:00
+    description: "convert a set of POD5 files from a single ONT run to one POD5 file per channel group"

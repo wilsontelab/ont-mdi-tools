@@ -1,0 +1,10 @@
+---
+# options that communicate the format of an ONT library
+options:
+    ont-library-type:
+        order: 1
+        short: L
+        type: character
+        required: false
+        default: ligation
+        description: "the type of ONT library prep (ligation|rapid), or the adapter sequence fused to gDNA start base'"

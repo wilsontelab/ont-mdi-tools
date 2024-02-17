@@ -1,0 +1,32 @@
+---
+# options that determine the behavior of the Dorado ONT basecaller
+# these are not usually offered by modules, rather they are set by pipelines via env-vars in pipeline.yml
+options:
+    duplex:
+        order: 1
+        short: x
+        type: boolean
+        required: false
+        default: false
+        description: "set this flag to perform duplex basecalling when possible"
+    emit-moves:
+        order: 2
+        short: V
+        type: boolean
+        required: false
+        default: false
+        description: "include the moves in a bam output tag for correlating bases to squiggles"
+    align-reads:
+        order: 3
+        short: n
+        type: boolean
+        required: false
+        default: false
+        description: "set this flag to have Dorado align reads using minimap2 (requires --genome)"
+    bandwidth:
+        order: 4
+        short: b
+        type: string
+        required: false
+        default: 500,3300
+        description: "bandwidth for chaining and base alignment, same as minimap2 -r option"

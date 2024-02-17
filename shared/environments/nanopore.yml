@@ -1,0 +1,10 @@
+---
+# programs used for working with nanopore reads
+# versions current as of February 2024
+dependencies:
+    - python=3
+    - pip
+    - minimap2=2.26
+    - samtools=1.19
+    - pip:
+        - pod5==0.3.6

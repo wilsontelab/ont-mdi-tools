@@ -1,0 +1,12 @@
+---
+# options that set the path to the input FAST5 read files for basecalling
+options:
+    input-dir: 
+        order: 1
+        short: i
+        type: string
+        required: true
+        default: null
+        directory:
+            must-exist: true
+        description: "directory with one or more *.fast5 files from a single long-read run"

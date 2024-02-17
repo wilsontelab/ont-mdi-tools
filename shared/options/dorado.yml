@@ -1,0 +1,67 @@
+---
+# options that determine the behavior of the Dorado ONT basecaller
+# these options should be offered by most modules that use basecall.sh
+options:
+    nanopore-dir: 
+        order: 1
+        short: a
+        type: string
+        required: false
+        default: ${MDI_DIR}/resources/nanopore
+        description: "directory where Dorado and ONT models are held; will be created"
+    dorado-version: 
+        order: 2
+        short: A
+        type: string
+        required: false
+        default: 0.5.3-linux-x64
+        description: "Dorado version to be downloaded and used, e.g., 0.5.3-linux-x64"
+    ont-model: 
+        order: 3
+        short: M
+        type: string
+        required: false
+        default: dna_r10.4.1_e8.2_400bps_sup@v4.3.0
+        description: "ONT basecalling model, based on flow cell, base rate, accuracy, and version"
+    modified-base-model:
+        order: 4
+        short: F
+        type: string
+        required: false
+        default: NA
+        description: "name of a modified base model to use, similar to --ont-model; incompatible with --duplex"
+    modified-base:
+        order: 5
+        short: B
+        type: string
+        required: false
+        default: C
+        description: "single-letter code of the parent base relevant to --modified-base-model, A, C, G or T"
+    pod5-buffer: 
+        order: 6
+        short: 5
+        type: string
+        required: false
+        default: shm # or tmp, for fewer, overly large pod5 files
+        description: "whether to use shared memory (shm) or --tmp-dir (tmp) for pod5 buffering"
+    pod5-batch-size: 
+        order: 7
+        short: z
+        type: integer
+        required: false
+        default: 20
+        description: "number of input pod5/fast5 files to process in each pass (must fit in --pod-buffer)"
+    dorado-options: 
+        order: 8
+        short: D
+        type: string
+        required: false
+        default: NA 
+        description: "additional options passed directly to the dorado basecaller or duplex command"
+    force-basecalling: 
+        order: 9
+        short: null
+        type: boolean
+        required: false
+        default: false
+        description: "set this flag to force basecalling of all reads, ignoring any existing bam files"

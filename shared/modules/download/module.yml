@@ -1,0 +1,18 @@
+---
+version: v0.0.0 # optional, for internal tracking
+action: # required
+    condaFamilies: 
+        - base
+        - nanopore
+    optionFamilies:
+        - dorado
+    resources:
+        required:
+            total-ram: 8G
+        recommended: 
+            n-cpu: 1
+            ram-per-cpu: 8G
+    job-manager:
+        recommended:
+            time-limit: 2:00:00
+    description: "download Dorado and an ONT basecalling model(s)"

@@ -1,0 +1,12 @@
+---
+# options that set the path to the input POD5 read files for basecalling
+options:
+    input-dir: 
+        order: 1
+        short: i
+        type: string
+        required: true
+        default: null
+        directory:
+            must-exist: false # since might still need to be created by pod5 convert
+        description: "directory with one or more *.pod5 files from a single long-read run"
