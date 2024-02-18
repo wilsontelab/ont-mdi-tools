@@ -15,8 +15,8 @@ for your use case, then source the bash scripts.
 
 ```sh
 EXPANDED_INPUT_DIR=/path/to/pod5s
-READ_IDS_FILE=/path/to/read_ids.txt
-POD5_OUTPUT_FILE=/path/to/out.pod5
+READ_IDS_FILES=/path/to/read_ids.txt
+POD5_OUTPUT_FILES=/path/to/out.pod5
 POD5_BATCH_SIZE=50
 # etc.
 source filter.sh
@@ -78,7 +78,7 @@ Finally, some ONT runs with short reads generate massive numbers
 of POD5 files with current versions of MinKnow. The sheer number of file
 transfers to work nodes can become a bottleneck. In such a case, consider
 running the `condense` script or pipeline action to reduce the file
-number before running `repack` or `condense`.
+number before running `repack` or `basecall`.
 
 ### Running batches in parallel
 

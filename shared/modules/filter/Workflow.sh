@@ -17,8 +17,11 @@ fi
 
 # parse MDI options in preparation for repacking
 EXPANDED_INPUT_DIR=`echo ${INPUT_DIR}`
-POD5_OUTPUT_FILE=$DATA_FILE_PREFIX.filtered.pod5
-source $PIPELINE_DIR/filter/$READ_IDS_SCRIPT  # pipeline must define a script to write a read ids file and set name into READ_IDS_FILE
+
+# pipeline must define a script to write
+#   read ids into READ_IDS_FILES
+#   pairwise POD5_OUTPUT_FILES
+source $PIPELINE_DIR/filter/$READ_IDS_SCRIPT  
 
 # convert one or more POD5 files from a single ONT run to one POD5 file per channel group
 # this is important for read duplexing to work properly when POD5 files are processed in batches

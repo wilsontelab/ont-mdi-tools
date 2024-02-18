@@ -14,8 +14,10 @@
 
 # the following environment variables are required and must be set or errors will occur:
 #   EXPANDED_INPUT_DIR = fully expanded path(s) to one or more space-delimited directories containing input pod5 files
-#   READ_IDS_FILE = path to one file of unique read ids to filter for, one read id per file line
-#   POD5_OUTPUT_FILE = path to one named output POD5 file; parent directory must exist
+#   READ_IDS_FILES = space-delimited path(s) to file(s) of unique read ids to filter for, one read id per file line
+#   POD5_OUTPUT_FILES = space-delimited path(s) to named output POD5 file(s); parent directory(s) must exist
+#       there will be one output file for every pairwise combination of READ_IDS_FILES and POD5_OUTPUT_FILES
+#       each filtered across all pod5 files found in all EXPANDED_INPUT_DIRs
 
 # the following environment variables are required but have default values:
 #   POD5_BUFFER_DIR = a fast directory on the node to use as a batch-level POD5 cache, will be created, defaults to /dev/shm/pod5_filter
@@ -30,7 +32,7 @@
 #   two input batches of POD5 files before filtering
 #   plus the smaller space required to store one batch's filter hits
 # FILTER_CACHE_DIR and POD5_BUFFER_DIR must have free space matching:
-#   the set of all POD5 filter hits over all batches of all input directories
+#   the set of all POD5 filter hits over all batches of all input directories for each output
 
 # example storage math (numbers are from an actual use case):
 #   570G = total input data in ${EXPANDED_INPUT_DIR}/*.pod5
@@ -58,15 +60,25 @@ echo "filtering POD5 files"
 echo "  pod5 buffer:        "${POD5_BUFFER_DIR}
 echo "  output cache:       "${FILTER_CACHE_DIR}
 echo "  pod5 batch size:    "${POD5_BATCH_SIZE}
-echo "  input:              "${EXPANDED_INPUT_DIR}
-echo "  read ids:           "${READ_IDS_FILE}
-echo "  output:             "${POD5_OUTPUT_FILE}
+echo "  input(s):           "${EXPANDED_INPUT_DIR}
+echo "  read id(s):         "${READ_IDS_FILES}
+echo "  output(s):          "${POD5_OUTPUT_FILES}
 
 # prepare the cache directories
 mkdir -p ${POD5_BUFFER_DIR}
 mkdir -p ${FILTER_CACHE_DIR}
 rm -rf ${POD5_BUFFER_DIR}/*
 rm -f ${FILTER_CACHE_DIR}/*.pod5
+
+#--------------------------------------------------------------------------------
+# OUTPUT DIRECTORY LOOP: process each pairwise combination of READ_IDS_FILES and POD5_OUTPUT_FILES
+#--------------------------------------------------------------------------------
+READ_IDS_FILES=($READ_IDS_FILES)
+POD5_OUTPUT_FILES=($POD5_OUTPUT_FILES)
+for ((OUTPUT_I=0; OUTPUT_I < ${#READ_IDS_FILES[@]}; OUTPUT_I+=1)); do 
+
+READ_IDS_FILE=${READ_IDS_FILES[@]:OUTPUT_I:1}
+POD5_OUTPUT_FILE=${POD5_OUTPUT_FILES[@]:OUTPUT_I:1}
 
 # check the read ids files
 if [ "$READ_IDS_FILE" = "" ]; then
@@ -87,9 +99,12 @@ if [[ -f "$POD5_OUTPUT_FILE" && "$FORCE_FILTERING" != "true" ]]; then
     echo "output file already exists and FORCE_FILTERING not set"
     echo "$POD5_OUTPUT_FILE"
     echo "nothing to do"
-    exit 1
+    continue
 fi
 rm -f ${POD5_OUTPUT_FILE}
+echo
+echo "processing:"
+echo "  read ids: $READ_IDS_FILE"
 
 #--------------------------------------------------------------------------------
 # INPUT DIRECTORY LOOP: process one pod5 input directory at a time
@@ -98,8 +113,7 @@ WORKING_I=0
 for WORKING_INPUT_DIR in ${EXPANDED_INPUT_DIR}; do
 
 # prepare the output
-echo
-echo "processing $WORKING_INPUT_DIR"
+echo "  against: $WORKING_INPUT_DIR"
 WORKING_I=$((WORKING_I + 1))
 BATCH_PREFIX="batch_$WORKING_I"
 
@@ -129,15 +143,6 @@ do_batch_copy () {
         mkdir -p $COPY_IN_DIR/in
         mkdir -p $COPY_IN_DIR/out
         BATCH_FILES=${POD5_FILES[@]:COPY_IN_I:POD5_BATCH_SIZE}
-
-        # TAR_FILE_NAME=filter_transfer_working.tar # with many small files, transfer is the slowest step, filtering on /dev/shm is very fast
-        # TAR_FILE=$PWD/$TAR_FILE_NAME
-        # tar -cf $TAR_FILE $BATCH_FILES
-        # mv $TAR_FILE $COPY_IN_DIR/in
-        # TAR_FILE=$COPY_IN_DIR/in/$TAR_FILE_NAME
-        # tar -xf $TAR_FILE
-        # rm -f $TAR_FILE
-
         cp $BATCH_FILES $COPY_IN_DIR/in
     fi
 }
@@ -181,16 +186,18 @@ done
 #--------------------------------------------------------------------------------
 # FILTER STAGE 2 - `pod5 merge` to reduce to a manageable number of files for batched basecalling
 #--------------------------------------------------------------------------------
-
 mkdir -p $POD5_BUFFER_DIR/in
 mkdir -p $POD5_BUFFER_DIR/out
 mv ${FILTER_CACHE_DIR}/batch-*-*.pod5 $POD5_BUFFER_DIR/in
 pod5 merge --threads ${N_CPU} --output $POD5_BUFFER_DIR/out/merged.out.pod5 $POD5_BUFFER_DIR/in
 mv $POD5_BUFFER_DIR/out/merged.out.pod5 $POD5_OUTPUT_FILE
 
+#--------------------------------------------------------------------------------
+# OUTPUT DIRECTORY LOOP: clean up and close loop
+#--------------------------------------------------------------------------------
 rm -rf ${POD5_BUFFER_DIR}/*
 rm -rf ${FILTER_CACHE_DIR}/*.pod5
-
+done
 
 # $ pod5 filter --help
 # usage: pod5 filter [-h] [-r] [-f] -i IDS -o OUTPUT [-t THREADS] [-M] [-D] inputs [inputs ...]
