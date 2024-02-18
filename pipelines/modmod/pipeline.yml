@@ -38,8 +38,13 @@ actions:
             recommended:
                 time-limit: 36:00:00
         description: "prepare for modification model training by splitting concatemerized training reads"
-    train:
+    filter:
         order: 4
+        module: filter
+        env-vars:
+            read-ids-script: set-read-ids.sh # make a single POD5 file of the reads containing chunks
+    train:
+        order: 5
         resources:
             required:
                 total-ram: 2G

@@ -13,6 +13,7 @@ ont-mdi-tools repository, namely:
 
 - `download` ONT software and models
 - `convert` FAST5 to POD5 files
+- `condense` the number of POD5 files in an ONT flowcell run
 - `repack` time-series POD5 files from MinKnow by channel group for duplex analysis
 - `basecall` POD5 signal data in simplex or duplex mode
 

@@ -1,0 +1,24 @@
+---
+# options that set the path to the input POD5 read files for filtering
+options:
+    pod5-buffer: 
+        order: 1
+        short: 5
+        type: string
+        required: false
+        default: shm # or tmp, for fewer, overly large pod5 files
+        description: "whether to use shared memory (shm) or --tmp-dir (tmp) for pod5 buffering"
+    pod5-batch-size: 
+        order: 2
+        short: z
+        type: integer
+        required: false
+        default: 50
+        description: "number of input pod5 files to process in each pass (must fit in --pod-buffer)"
+    force-filtering: 
+        order: 3
+        short: null
+        type: boolean
+        required: false
+        default: false
+        description: "set this flag to force filtering even if output POD5 file exists"

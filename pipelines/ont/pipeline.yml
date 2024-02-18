@@ -12,11 +12,14 @@ actions:
     convert:
         order: 2
         module: convert
-    repack:
+    condense:
         order: 3
+        module: condense
+    repack:
+        order: 4
         module: repack
     basecall:
-        order: 4
+        order: 5
         module: basecall
 # container:
 #     supported: false    

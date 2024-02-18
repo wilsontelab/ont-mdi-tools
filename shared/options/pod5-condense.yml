@@ -1,0 +1,10 @@
+---
+# options that set the path to the input POD5 read files for condensing POD5 files
+options:
+    pod5-batch-size: 
+        order: 1
+        short: z
+        type: integer
+        required: false
+        default: 50
+        description: "number of input pod5 files to condense into each output POD5 file"
