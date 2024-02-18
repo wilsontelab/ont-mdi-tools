@@ -15,6 +15,15 @@ for your use case, then source the bash scripts.
 
 ```sh
 EXPANDED_INPUT_DIR=/path/to/pod5s
+READ_IDS_FILE=/path/to/read_ids.txt
+POD5_OUTPUT_FILE=/path/to/out.pod5
+POD5_BATCH_SIZE=50
+# etc.
+source filter.sh
+```
+
+```sh
+EXPANDED_INPUT_DIR=/path/to/pod5s
 POD5_BATCH_SIZE=50
 CHANNEL_GROUP_SIZE=50
 # etc.
@@ -33,8 +42,10 @@ source basecall.sh
 Full details about the required and available environment variables
 are provided at the top of the standalone scripts.
 
+- filter: <https://github.com/wilsontelab/ont-mdi-tools/blob/main/shared/modules/filter/filter.sh>
 - repack: <https://github.com/wilsontelab/ont-mdi-tools/blob/main/shared/modules/repack/repack.sh>
 - bacecall: <https://github.com/wilsontelab/ont-mdi-tools/blob/main/shared/modules/basecall/basecall.sh>
+- condense: <https://github.com/wilsontelab/ont-mdi-tools/blob/main/shared/modules/condense/condense.sh>
 
 ### Tuning script usage
 
@@ -55,13 +66,19 @@ Comments in the scripts provide detailed example calculations and guidelines.
 
 Even if you have a large local /tmp SSD available,
 don't set the batch size too high. With a large
-batch size, you may wait too long for the initial file transfer before the ONT software can begin - one goal of batching is to allow file transfers
-and data processing to run concurrently.
+batch size, you may wait too long for the initial file transfer before the ONT software can begin - 
+one goal of batching is to allow file transfers and data processing to run concurrently.
 
 However, too small a batch size is also non-productive, because you 
 will incur excessive overhead from repeating the startup actions of
 programs like `dorado` too many times. Let experience be your guide,
 but we have good success running up to 50G file batches. 
+
+Finally, some ONT runs with short reads generate massive numbers
+of POD5 files with current versions of MinKnow. The sheer number of file
+transfers to work nodes can become a bottleneck. In such a case, consider
+running the `condense` script or pipeline action to reduce the file
+number before running `repack` or `condense`.
 
 ### Running batches in parallel
 
@@ -70,7 +87,8 @@ since the action must integrate data from all POD5 files
 in a single data set.
 
 In contrast, `basecall` batches could be executed in parallel on different nodes.
-The script does not explicitly support this. You could do it yourself by how you set the directories, however, we find that:
+The script does not explicitly support this. 
+You could do it yourself by how you set the directories, however, we find that:
 - basecalling is sufficiently fast with serial batching (measured in hours)
 - GPU nodes are more precious and subject to usage limits and competition
 

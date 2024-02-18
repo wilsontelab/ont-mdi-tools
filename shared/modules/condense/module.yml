@@ -1,0 +1,19 @@
+---
+version: v0.0.0 # optional, for internal tracking
+action: # required
+    condaFamilies: 
+        - base
+        - nanopore
+    optionFamilies:
+        - pod5-dir
+        - pod5-condense
+    resources:
+        required:
+            total-ram: 16G
+        recommended: 
+            n-cpu: 4
+            ram-per-cpu: 4G
+    job-manager:
+        recommended:
+            time-limit: 12:00:00
+    description: "reduce the number of POD5 files returned by MinKnow in an ONT flowcell run"

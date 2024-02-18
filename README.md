@@ -20,7 +20,7 @@ actions like alignment and variant calling.
 ### Available tools
 
 Pipelines and apps in stable release, based on established modules:
-- **ont** = a simple pipeline wrapper around download, convert, repack, and basecall actions
+- **ont** = a simple pipeline wrapper around download, convert, condense, repack, and basecall actions
 
 Pipelines and apps in alpha, with exploratory code that is not considered stable:
 - **modmod** = train a base modification model (modmod) using concatemerized oligos
@@ -28,6 +28,8 @@ Pipelines and apps in alpha, with exploratory code that is not considered stable
 Shared action modules for use by other pipelines include:
 - **download** = downlad ONT software and basecalling models
 - **convert** = convert FAST5 files to POD5 format
+- **condense** = reduce the number of POD5 files in an ONT flowcell run
+- **filter** = filter POD5 files against a set of read ids
 - **repack** = sort a set of POD5 files from a single ONT run to one POD5 file per channel group prior to duplex analysis
 - **basecall** = perform efficient basecalling (and optionally alignment) on POD5 reads on a shared compute cluster
 

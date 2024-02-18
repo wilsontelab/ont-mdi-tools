@@ -7,7 +7,7 @@ published: true
 
 ## {{page.title}}
 
-Shared modules `repack` and `basecall`
+Shared modules `filter`, `repack` and `basecall`
 offer standalone scripts for performing IO-intensive actions
 on POD5 files on shared HPC resource servers. These same
 scripts are used in our pipelines but are designed to be easily

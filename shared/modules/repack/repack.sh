@@ -172,7 +172,6 @@ do_batch_copy
 echo
 echo "collecting unique channel groups"
 CHANNEL_GROUPS=(`cut -f 3 ${POD5_SUMMARY_FILE} | grep -v "channel_group" | sort -k1,1n --parallel ${N_CPU} | uniq`)
-rm -rf ${POD5_BUFFER_DIR}/*
 
 # functions for copying and processing a batch of pod5 files
 do_batch_copy2 () {

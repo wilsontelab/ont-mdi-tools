@@ -9,7 +9,8 @@ published: true
 ## {{page.title}}
 
 We provide details on a run of a single Promethion flow cell used
-to sequence a rapid-kit whole-genomic library to exhaustion. This is a  smaller data set as compared to the deepest ligation kit libraries,
+to sequence a rapid-kit whole-genomic library to exhaustion. 
+This is a  smaller data set as compared to the deepest ligation kit libraries,
 but sufficiently large to provide a reference.
 
 ### The objective
