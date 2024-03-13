@@ -15,12 +15,23 @@ for ((BASE_I=0; BASE_I < ${#BAM_DIRS[@]}; BASE_I+=1)); do
 
     echo $BAM_DIR
     rm -f $READ_IDS_FILE
+    rm -f $READ_IDS_FILE.tmp
+
     for BAM_FILE in "${BAM_FILES[@]}"; do 
         echo "  $BAM_FILE"
-        samtools view $BAM_FILE | 
-        cut -f 1 | 
-        uniq >> $READ_IDS_FILE  # each file is already name sorted
+        samtools view $BAM_FILE | # print both this read's id, and, if a split read, the parent read id
+        perl -ne '
+            $_ =~ m/pi:Z:(\S+)/ and print "$1\n";
+            my @f = split("\t", $_, 2);
+            print "$f[0]\n";
+
+        ' >> $READ_IDS_FILE.tmp
     done
+
+    echo "sorting to unique"
+    sort --parallel $N_CPU --buffer-size 4G $READ_IDS_FILE.tmp | 
+    uniq > $READ_IDS_FILE
+    rm -f $READ_IDS_FILE.tmp
 
     echo $READ_IDS_FILE
     head $READ_IDS_FILE
