@@ -70,6 +70,12 @@ mkdir -p ${FILTER_CACHE_DIR}
 rm -rf ${POD5_BUFFER_DIR}/*
 rm -f ${FILTER_CACHE_DIR}/*.pod5
 
+
+# TODO: swap the outer and inner loops!
+# that way, can adjust the execution code to run all filters
+# against the same set of transferred files (the slow step, do it once only) 
+
+
 #--------------------------------------------------------------------------------
 # OUTPUT DIRECTORY LOOP: process each pairwise combination of READ_IDS_FILES and POD5_OUTPUT_FILES
 #--------------------------------------------------------------------------------

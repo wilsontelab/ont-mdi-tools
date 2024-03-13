@@ -15,5 +15,5 @@ action: # required
             ram-per-cpu: 12G
     job-manager:
         recommended:
-            time-limit: 12:00:00
+            time-limit: 18:00:00
     description: "filter a set of POD5 files against a list of read ids to create one [much] smaller POD5"
